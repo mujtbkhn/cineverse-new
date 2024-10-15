@@ -37,4 +37,3 @@ export const SUPPORTED_LANGUAGES = [
   { identifier: "arabic", name: "Arabic" },
 ];
 
-export const OPENAI_KEY = process.env.REACT_APP_OPENAI_KEY;
