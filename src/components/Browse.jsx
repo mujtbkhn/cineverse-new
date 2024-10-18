@@ -7,9 +7,7 @@ import usePopularMovies from "../hooks/usePopularMovies";
 import useTopRatedMovies from "../hooks/useTopRatedMovies";
 import useUpcomingMovies from "../hooks/useUpcomingMovies";
 
-// import { useSelector } from "react-redux";
 import Footer from "./MainContainer/Footer";
-// import GPTSearch from "./GPT/GPTSearch";
 
 const Browse = () => {
   //these are called to update the store so whenever i fetch from SecondaryContainer i get the updated movies lists
@@ -18,20 +16,11 @@ const Browse = () => {
   useTopRatedMovies();
   useUpcomingMovies();
 
-  // const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
   return (
     <div className="overflow-y-scroll scrollbar-hide">
       <Header />
-      {/* {showGptSearch ? (
-        <GPTSearch />
-
-      ) : ( */}
-        {/* <> */}
-          {" "}
-          <MainContainer />
-          <SecondaryContainer />{" "}
-        {/* </>
-      )} */}
+      <MainContainer />
+      <SecondaryContainer />
       <Footer />
     </div>
   );

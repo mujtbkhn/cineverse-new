@@ -41,40 +41,32 @@ const Favorite = () => {
   };
 
   return (
-    <div className="bg-[#04152D] text-white">
-      <div className="flex pb-14">
+    <div className="bg-[#04152D] text-white min-h-screen">
+      <div className="pb-14">
         <Header enableAuthentication={false} />
       </div>
-      <div className="flex flex-wrap justify-center gap-10 p-10">
-        {favorite.map((movie) => (
-          <div className="flex flex-col" key={movie.id}>
-            <MovieCard
-              className="flex flex-wrap justify-center gap-10 p-1 m-2 md:p-5 md:m-5"
-              posterPath={movie?.poster_path}
-              id={movie.id}
-              rating={movie.vote_average.toFixed(1)}
-              trimmedTitle={
-                window.innerWidth < 768
-                  ? movie.title.length > 5
-                    ? movie.title.slice(0, 6) + "..."
-                    : movie.title
-                  : movie.title.length > 10
-                    ? movie.title.slice(0, 15) + "..."
-                    : movie.title
-              }
-              release_date={movie.release_date}
-              onFavoriteClick={() => handleFavoriteClick(movie)}
-            />
-            <div className="flex justify-center">
+      <div className="container px-4 mx-auto">
+        <h1 className="my-8 text-2xl font-bold text-center md:text-3xl">Your Favorites</h1>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+          {favorite.map((movie) => (
+            <div className="flex flex-col items-center" key={movie.id}>
+              <MovieCard
+                posterPath={movie?.poster_path}
+                id={movie.id}
+                rating={movie.vote_average.toFixed(1)}
+                trimmedTitle={movie.title.length > 15 ? movie.title.slice(0, 15) + "..." : movie.title}
+                release_date={movie.release_date}
+                onFavoriteClick={() => handleFavoriteClick(movie)}
+              />
               <button
-                className="px-5 pt-2 bg-red-700 rounded-md"
+                className="px-4 py-2 mt-2 text-white transition-colors bg-red-700 rounded-md hover:bg-red-600"
                 onClick={() => removeFromFavorite(movie.id)}
               >
                 Remove
               </button>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

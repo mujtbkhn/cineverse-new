@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import toast from 'react-hot-toast';
 
 const useAddToFavorite = (id, details) => {
     const [favorite, setFavorite] = useState(false);
@@ -45,11 +46,13 @@ const useAddToFavorite = (id, details) => {
                 const updatedFavorites = existingFavorites.filter((movie) => movie?.id !== id);
                 localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
                 setFavorite(false);
+                toast.success("Movie removed From favorites")
             } else {
                 // Add to favorites
                 const updatedFavorites = [...existingFavorites, details];
                 localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
                 setFavorite(true);
+                toast.success("Movie added to Favorite")
             }
         } catch (err) {
             console.error("Error updating favorites:", err);

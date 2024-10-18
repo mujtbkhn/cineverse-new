@@ -26,11 +26,11 @@ const MovieCard = ({ id, posterPath, rating, trimmedTitle, release_date }) => {
   if (!posterPath) return null;
 
   return (
-    <div className="relative z-10 w-32 pr-6 rounded-md md:w-60">
+    <div className="relative z-10 w-40 pr-6 rounded-md sm:w-48 md:w-60 lg:w-60">
       <div className="">
         <div
           onClick={addToWatchList}
-          className="flex justify-around mx-auto text-4xl md:justify-center w-96"
+          className="flex justify-around mx-auto text-4xl cursor-pointer md:justify-center w-96"
         >
           {watchList ? (
             <img
@@ -48,7 +48,7 @@ const MovieCard = ({ id, posterPath, rating, trimmedTitle, release_date }) => {
         </div>
         <div
           onClick={addToFavorite}
-          className="flex justify-around mx-auto text-4xl md:justify-center w-96"
+          className="flex justify-around mx-auto text-4xl cursor-pointer md:justify-center w-96 "
         >
           {favorite ? (
             <img

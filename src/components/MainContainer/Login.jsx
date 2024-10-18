@@ -20,6 +20,7 @@ const Login = () => {
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm);
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
   };
@@ -77,7 +78,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -88,58 +88,60 @@ const Login = () => {
   };
 
   return (
-    <>
-      <div className="flex">
-        <Header enableAuthentication={true} />
-      </div>
-
-      <div className="absolute ">
+    <div className="relative w-full h-screen overflow-hidden">
+      <Header enableAuthentication={true} />
+      
+      <div className="absolute inset-0">
         <img
-          className="object-cover h-screen md:object-none md:w-screen"
+          className="object-cover w-full h-full md:h-screen"
           src={BACKGROUND}
           alt="background"
         />
       </div>
 
       <form
-        className="absolute left-0 right-0 flex flex-col mx-auto w-[90%] my-40 text-white bg-black md:w-3/12 m rounded-2xl bg-opacity-80 p-14"
+        className="relative flex flex-col w-[90%] max-w-lg mx-auto my-40 p-6 bg-black bg-opacity-80 rounded-2xl text-white space-y-4
+                  md:w-1/2 md:my-40 lg:w-1/3"
         onSubmit={handleSubmit}
       >
-        <h1 className="text-3xl">{isSignInForm ? "Sign In" : "Sign Up"}</h1>
+        <h1 className="text-3xl text-center">{isSignInForm ? "Sign In" : "Sign Up"}</h1>
         {!isSignInForm && (
           <input
             ref={name}
-            className="w-full p-4 my-8 text-center text-black rounded-md"
+            className="w-full p-4 my-2 text-center text-black rounded-md"
             type="text"
             placeholder="Name"
           />
         )}
         <input
           ref={email}
-          className="w-full p-4 my-8 text-center text-black rounded-md"
+          className="w-full p-4 my-2 text-center text-black rounded-md"
           type="text"
           placeholder="Email-address"
         />
         <input
           ref={password}
-          className="w-full p-4 my-8 text-center text-black rounded-md"
+          className="w-full p-4 my-2 text-center text-black rounded-md"
           type="password"
-          placeholder="password"
+          placeholder="Password"
         />
         <button
           onClick={handleButtonClick}
-          className="w-full p-4 my-8 bg-red-700 rounded-xl"
+          className="w-full p-4 my-4 text-white bg-red-700 rounded-xl"
         >
           {isSignInForm ? "Sign In" : "Sign Up"}
         </button>
-        <p className="pb-5 text-red-700">{errorMessage}</p>
-        <p className="cursor-pointer" onClick={toggleSignInForm}>
+        <p className="text-red-700">{errorMessage}</p>
+        <p
+          className="text-center underline cursor-pointer"
+          onClick={toggleSignInForm}
+        >
           {isSignInForm
             ? "New to Cineverse? Sign Up Now"
             : "Already Registered? Sign In now"}
         </p>
       </form>
-    </>
+    </div>
   );
 };
 

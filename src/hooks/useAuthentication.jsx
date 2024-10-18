@@ -26,7 +26,7 @@ const useAuthentication = (enableAuthentication = true) => {
         navigate("/");
       } else {
         dispatch(removeUser());
-        navigate("/");
+        // navigate("/");
       }
     });
 

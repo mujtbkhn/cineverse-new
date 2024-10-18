@@ -161,139 +161,105 @@ const MovieDetails = () => {
 
   return (
     <div className="w-full text-white font-roboto">
-      <div className="flex pb-16 md:pt-4 md:pb-14">
+      <div className="pb-16 md:pt-4 md:pb-14">
         <Header enableAuthentication={false} />
       </div>
-      <div className="flex flex-col px-18 md:px-48">
-        <div>
-          <h1 className="my-8 text-3xl md:text-6xl">{details?.title}</h1>
-        </div>
-        <div className="flex items-center justify-between mx-4 md:mx-10 md:gap-10 ">
-          <div className="flex md:gap-6">
+      <div className="flex flex-col justify-center px-4 sm:px-8 md:px-16 lg:px-24">
+        <h1 className="my-8 text-2xl text-center sm:text-3xl md:text-4xl lg:text-6xl">{details?.title}</h1>
+        <div className="flex flex-col items-center justify-between mb-8 space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
+          <div className="flex flex-wrap justify-center gap-4 sm:justify-start">
             <h2 className="text-gray-300">{formattedReleaseDate}</h2>
             <h2 className="text-gray-300">{formattedRuntime}</h2>
           </div>
-          <div className="flex gap-10">
-            <div className="flex gap-2 px-2 py-1 bg-gray-100 rounded-md border-1 bg-opacity-20">
-              <span className=" group">
+          <div className="flex gap-4">
+            <div className="flex gap-2 px-2 py-1 bg-gray-100 rounded-md bg-opacity-20">
+              <span className="relative group">
                 <img
-                  className="w-7"
-                  src={
-                    rate
-                      ? "https://img.icons8.com/fluency/48/star--v1.png"
-                      : "https://img.icons8.com/ios/50/737373/star--v1.png"
-                  }
+                  className="w-6 h-6"
+                  src={rate ? "https://img.icons8.com/fluency/48/star--v1.png" : "https://img.icons8.com/ios/50/737373/star--v1.png"}
+                  alt="Rate"
                 />
-                <div className="absolute hidden group-hover:flex top-32">
-                  {" "}
+                <div className="absolute hidden group-hover:flex top-full">
                   <Rating onRatingChanged={handleRatingChanged} />
                 </div>
               </span>
-              <button className="my-auto">Rate</button>
+              <button className="text-sm">Rate</button>
             </div>
-            <div className="flex gap-2 px-2 py-1 bg-gray-100 rounded-md border-1 bg-opacity-20">
-              <img
-                className="object-contain w-6 "
-                src="https://img.icons8.com/fluency/48/star--v1.png"
-                alt="star--v1"
-              />
-              <h2 className="my-auto">
-                {details?.vote_average.toFixed(1)}/10
-              </h2>
+            <div className="flex gap-2 px-2 py-1 bg-gray-100 rounded-md bg-opacity-20">
+              <img className="w-6 h-6" src="https://img.icons8.com/fluency/48/star--v1.png" alt="star" />
+              <h2 className="text-sm">{details?.vote_average.toFixed(1)}/10</h2>
             </div>
           </div>
         </div>
       </div>
-      <div className="justify-center px-4 mt-10 md:px-44 md:flex-col md:flex">
-        <div className="flex flex-col gap-5 mx-auto md:gap-20 w-60 md:w-full md:flex-row">
-          <img className="max-w-96" src={imgUrl}/>
-          {/* <iframe
-            className="w-full aspect-video"
-            src={
-              "https://www.youtube.com/embed/" + trailerVideo?.key
-              // " + ?&autoplay=1&mute=1"
-            }
-            title="YouTube video player"
-            allow="accelerometer; autoplay;clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          ></iframe> */}
+      <div className="flex flex-col justify-center px-4 space-y-8 lg:flex-row sm:px-8 md:px-16 lg:px-24 lg:space-y-0 lg:space-x-8">
+        <div className="flex justify-center lg:w-1/3">
+          <img className="h-auto max-w-full rounded-lg shadow-lg" src={imgUrl} alt={details?.title} />
         </div>
-        <div className="flex flex-col gap-10 my-10">
-          <div className="flex flex-col gap-10 md:flex-row">
-            <h2 className="mx-auto md:text-xl w-18">Overview</h2>
-            <h3 className="md:text-xl">{details?.overview}</h3>
+        <div className="flex flex-col space-y-6 lg:w-2/3">
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold">Overview</h2>
+            <p className="text-sm sm:text-base">{details?.overview}</p>
           </div>
-          <div className="flex items-center gap-10">
-            <h2 className="text-xl md:w-52">Genre</h2>
-            <div className="flex flex-wrap md:gap-20">
-              {details &&
-                details.genres.map((genre) => (
-                  <button
-                    key={genre.id}
-                    className="flex items-center justify-center h-10 px-5 text-gray-100 bg-white bg-opacity-40 rounded-2xl"
-                  >
-                    <h3>{genre.name}</h3>
-                  </button>
-                ))}
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold">Genre</h2>
+            <div className="flex flex-wrap gap-2">
+              {details?.genres.map((genre) => (
+                <span key={genre.id} className="px-3 py-1 text-sm bg-white rounded-full bg-opacity-20">
+                  {genre.name}
+                </span>
+              ))}
             </div>
-
-            <button
-              onClick={addToWatchList}
-              className="flex justify-center px-6 py-2 m-4 mx-auto text-black bg-[#f5c518] rounded-md w-48"
-            >
-              {watchList ? "Added to watchList" : "Add to watchList"}
-            </button>
           </div>
-          <div className="flex gap-10">
-            <h2 className="md:text-xl md:w-52">Director</h2>
-            <h3 className="text-yellow-500 md:text-xl">{director}</h3>
-          </div>
-          <div className="flex gap-10">
-            <h2 className="md:text-xl md:w-52">Stars</h2>
-            <h3 className="text-yellow-500 md:text-xl">{actor}</h3>
+          <button
+            onClick={addToWatchList}
+            className="w-full sm:w-auto px-6 py-2 text-black bg-[#f5c518] rounded-md hover:bg-[#d4a91d] transition-colors"
+          >
+            {watchList ? "Added to watchlist" : "Add to watchlist"}
+          </button>
+          <div className="space-y-2">
+            <div className="flex">
+              <h2 className="w-24 font-semibold">Director:</h2>
+              <p className="text-yellow-500">{director}</p>
+            </div>
+            <div className="flex">
+              <h2 className="w-24 font-semibold">Stars:</h2>
+              <p className="text-yellow-500">{actor}</p>
+            </div>
           </div>
         </div>
+      </div>
+      <div className="px-4 mt-12 sm:px-8 md:px-16 lg:px-24">
         <Photos />
-        <h2 className="text-3xl ">Cast: </h2>
-        <div className="flex flex-wrap justify-center gap-10 ">
-          {cast?.map((castMember) => (
-            <div className="flex flex-col flex-wrap" key={castMember.id}>
-              <Link to={personId ? `/person/${personId}` : "#"}>
-                {castMember.profile_path ? (
+        <h2 className="mt-12 mb-6 text-2xl font-semibold">Cast</h2>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+          {cast?.slice(0, 8).map((castMember) => (
+            <div key={castMember.id} className="flex flex-col items-center">
+              <Link to={personId ? `/person/${personId}` : "#"} onClick={() => fetchPerson(castMember?.original_name)}>
+                {castMember.profile_path && (
                   <img
-                    onClick={() => fetchPerson(castMember?.original_name)}
-                    className="object-cover w-20 rounded-md h-36 md:w-32"
+                    className="object-cover w-32 h-48 mb-2 rounded-md shadow-md"
                     src={IMG_CDN + castMember?.profile_path}
                     alt={castMember?.original_name}
                   />
-                ) : null}
+                )}
               </Link>
-              <h1 className="font-bold">
-                {window.innerWidth < 768
-                  ? castMember?.original_name.slice(0, 10) + "..."
-                  : castMember?.original_name.slice(0, 15) + "..."}
-              </h1>
-              <h2>
-                {window.innerWidth < 768
-                  ? castMember?.character.slice(0, 10) + "..."
-                  : castMember?.character.slice(0, 15) + "..."}
-              </h2>
+              <h3 className="text-sm font-semibold text-center">{castMember?.original_name}</h3>
+              <p className="text-xs text-center text-gray-400">{castMember?.character}</p>
             </div>
-          )).slice(0, 8)}
+          ))}
         </div>
-        <h1 className="p-5 my-10 text-5xl ">More like this</h1>
-        <div className="flex flex-wrap justify-center gap-10 md:flex-row md:justify-center ">
+      </div>
+      <div className="px-4 mt-12 sm:px-8 md:px-16 lg:px-24">
+        <h2 className="mb-6 text-2xl font-semibold">More like this</h2>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
           {similar.map((movie) => (
             <MovieCard
-              className="flex flex-wrap justify-center gap-10 p-1 m-2 md:p-5 md:m-5"
               key={movie.id}
               posterPath={movie?.poster_path}
               id={movie.id}
               rating={movie.vote_average.toFixed(1)}
-              trimmedTitle={
-                movie.title.length > 10
-                  ? movie.title.slice(0, 15) + "..."
-                  : movie.title
-              }
+              trimmedTitle={movie.title.length > 15 ? movie.title.slice(0, 15) + "..." : movie.title}
               release_date={movie.release_date}
             />
           ))}

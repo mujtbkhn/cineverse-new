@@ -5,16 +5,17 @@ import Favorite from "./Favorite";
 import { Suspense, lazy } from "react";
 import ExploreMovies from "./ExploreMovies";
 import Login from "./MainContainer/Login";
+import { Toaster } from "react-hot-toast";
 
 const MovieDetails = lazy(() => import("./MovieDetails/MovieDetails"));
 const Person = lazy(() => import("./Person"));
 
 const Body = () => {
   const appRouter = createBrowserRouter([
-    // {
-    //   path: "/",
-    //   element: <Login />,
-    // },
+    {
+      path: "/login",
+      element: <Login />,
+    },
     {
       path: "/",
       element: <Browse />,
@@ -52,6 +53,7 @@ const Body = () => {
   return (
     <div>
       <RouterProvider router={appRouter} />
+      <Toaster position="top-center" />
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import toast from 'react-hot-toast';
 
 const useAddToWatchlist = (id, details) => {
   const [watchList, setWatchList] = useState(false);
@@ -45,11 +46,13 @@ const useAddToWatchlist = (id, details) => {
         const updatedWatchLists = existingWatchLists.filter((movie) => movie?.id !== id);
         localStorage.setItem("WatchList", JSON.stringify(updatedWatchLists));
         setWatchList(false);
+        toast.success("Movie removed from Watchlist")
       } else {
         // Add to watchlist
         const updatedWatchLists = [...existingWatchLists, details];
         localStorage.setItem("WatchList", JSON.stringify(updatedWatchLists));
         setWatchList(true);
+        toast.success("Movie added To Watchlist")
       }
     } catch (err) {
       console.error("Error updating watchlist:", err);

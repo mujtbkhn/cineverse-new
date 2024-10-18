@@ -8,6 +8,7 @@ const ExploreMovies = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
+
   useEffect(() => {
     fetchMovies();
   }, []);
@@ -22,13 +23,13 @@ const ExploreMovies = () => {
         OPTIONS
       );
       const json = await data.json();
-      console.log(json.results);
       setMovies((prevMovies) => [...prevMovies, ...json.results]);
       setPage((prevPage) => prevPage + 1);
       setLoading(false);
     } catch (error) {
       setError(error);
       console.log("error occurred while fetching: ", error);
+      setLoading(false);
     }
   };
 
@@ -49,35 +50,32 @@ const ExploreMovies = () => {
   }, [loading]);
 
   return (
-    <div className="bg-[#04152D] text-white ">
-      <div className="flex pb-14">
+    <div className="bg-[#04152D] text-white min-h-screen">
+      <div className="pb-14">
         <Header enableAuthentication={false} />
       </div>
-      <div className="py-5 ml-10 text-3xl align-middle ">
-        Explore Movies From TMDB API
-      </div>
-      <div className="flex flex-wrap justify-center gap-10 md:flex-row md:justify-center ">
-        {movies?.map((movie) => (
-          <MovieCard
-            className="flex flex-wrap justify-center gap-10 p-1 m-2 text-white md:p-5 md:m-5"
-            key={movie.id}
-            posterPath={movie?.poster_path}
-            id={movie.id}
-            rating={movie.vote_average.toFixed(1)}
-            trimmedTitle={
-              window.innerWidth < 768
-                ? movie.title.length > 5
-                  ? movie.title.slice(0, 6) + "..."
-                  : movie.title
-                : movie.title.length > 10
-                ? movie.title.slice(0, 15) + "..."
-                : movie.title
-            }
-            release_date={movie.release_date}
-          />
-        ))}
-        {loading && <p>Loading...</p>}
-        {error && <p>Error: {error.message}</p>}
+      <div className="container px-4 mx-auto">
+        <h1 className="my-8 text-2xl font-bold md:text-3xl">
+          Explore Movies From TMDB API
+        </h1>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+          {movies?.map((movie) => (
+            <MovieCard
+              key={movie.id}
+              posterPath={movie?.poster_path}
+              id={movie.id}
+              rating={movie.vote_average.toFixed(1)}
+              trimmedTitle={movie.title.length > 15 ? movie.title.slice(0, 15) + "..." : movie.title}
+              release_date={movie.release_date}
+            />
+          ))}
+        </div>
+        {loading && (
+          <div className="flex items-center justify-center my-8">
+            <div className="w-12 h-12 border-t-2 border-b-2 border-white rounded-full animate-spin"></div>
+          </div>
+        )}
+        {error && <p className="my-8 text-center text-red-500">Error: {error.message}</p>}
       </div>
     </div>
   );
